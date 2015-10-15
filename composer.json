@@ -1,0 +1,20 @@
+{
+    "name": "soneritics/databaso",
+    "type": "library",
+    "description": "Soneritics Database framework for PHP 5.5 and higher.",
+    "homepage": "http://database.soneritics.nl/",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "squizlabs/php_codesniffer": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {"Framework\\": "Soneritics/Database/"}
+    }
+}
