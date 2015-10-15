@@ -49,8 +49,10 @@ class Table
      */
     private $table = null;
 
-
-    private $schema = null;
+    /**
+     * @var array
+     */
+    private $columns = null;
 
     /**
      * Constructor. Takes the class name and sets the name and table properties.
