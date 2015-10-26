@@ -15,6 +15,6 @@
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
-        "psr-4": {"Framework\\": "Soneritics/Database/"}
+        "psr-4": {"Database\\": "Soneritics/Database/"}
     }
 }
