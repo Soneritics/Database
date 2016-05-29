@@ -1,5 +1,5 @@
 {
-    "name": "soneritics/databaso",
+    "name": "soneritics/database",
     "type": "library",
     "description": "Soneritics Database framework for PHP 5.5 and higher.",
     "homepage": "http://database.soneritics.nl/",
