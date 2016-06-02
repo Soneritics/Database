@@ -45,10 +45,10 @@ class DatabaseConnectionFactory
      */
     public static function create($id, array $config)
     {
-        static::$databaseConnections[$id] = static::set($config);
+        static::$databaseConnections[$id] = static::createDatabaseConnection($config);
 
         if (static::$activeDatabaseConnection === null) {
-            static::$activeDatabaseConnection = $id;
+            static::select($id);
         }
     }
 
@@ -67,18 +67,17 @@ class DatabaseConnectionFactory
         if ($id === null) {
             return static::$databaseConnections[static::$activeDatabaseConnection];
         } else {
-            static::$activeDatabaseConnection = $id;
             return static::$databaseConnections[$id];
         }
     }
 
     /**
-     * Select the currently active database.
+     * Select a database as default database.
      * @param string $id
      */
     public static function select($id)
     {
-        static::get($id);
+        static::$activeDatabaseConnection = $id;
     }
 
     /**
@@ -86,7 +85,7 @@ class DatabaseConnectionFactory
      * @param  array $config
      * @return IDatabaseConnection
      */
-    private static function set(array $config)
+    private static function createDatabaseConnection(array $config)
     {
         $databaseConnectionClass = 'Database\DatabaseConnection\\' . $config['type'];
         return new $databaseConnectionClass($config);
