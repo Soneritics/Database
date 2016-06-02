@@ -87,6 +87,10 @@ class DatabaseConnectionFactory
         static::$activeDatabaseConnection = $id;
     }
 
+    /**
+     * Get the currently active database's id.
+     * @return null|string
+     */
     public static function getActiveDatabaseId()
     {
         return static::$activeDatabaseConnection;
