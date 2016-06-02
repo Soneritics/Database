@@ -35,7 +35,14 @@ use Database\Exceptions\MissingDatabaseConnectionException;
  */
 class DatabaseConnectionFactory
 {
+    /**
+     * @var array
+     */
     private static $databaseConnections = [];
+
+    /**
+     * @var null|string
+     */
     private static $activeDatabaseConnection = null;
 
     /**
@@ -78,6 +85,11 @@ class DatabaseConnectionFactory
     public static function select($id)
     {
         static::$activeDatabaseConnection = $id;
+    }
+
+    public static function getActiveDatabaseId()
+    {
+        return static::$activeDatabaseConnection;
     }
 
     /**
