@@ -258,4 +258,15 @@ class Table
     {
         return new Count($this);
     }
+
+    /**
+     * Check if the table exists in the database.
+     * @return bool
+     */
+    public function exists()
+    {
+        $quotedTable = \Database\DatabaseConnectionFactory::get()->quote($this->getTable());
+        $record = \Database\DatabaseConnectionFactory::get()->query("show tables like {$quotedTable}");
+        return !is_a($record, 'Database\DatabaseRecord\EmptyDatabaseRecord') && count($record->all()) > 0;
+    }
 }
