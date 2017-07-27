@@ -181,6 +181,12 @@ class Table
     public function reloadTableSchema()
     {
         $this->columns = [];
+
+        $described = $this->describe()->execute();
+        while ($column = $described->get()) {
+            $this->columns[] = $column['COLUMNS']['Field'];
+        }
+
         return $this;
     }
 
@@ -257,6 +263,15 @@ class Table
     public function count()
     {
         return new Count($this);
+    }
+
+    /**
+     * Execute a describe query.
+     * @return Count
+     */
+    public function describe()
+    {
+        return new Describe($this);
     }
 
     /**
