@@ -25,6 +25,7 @@
 namespace Database;
 
 use Database\Query\Delete;
+use Database\Query\Describe;
 use Database\Query\Insert;
 use Database\Query\Select;
 use Database\Query\Truncate;
