@@ -28,6 +28,7 @@ use Database\DatabaseConnection\DatabaseTypeTraits\MySQLTrait;
 use Database\DatabaseRecord\DatabaseRecord;
 use Database\DatabaseRecord\PDODatabaseRecord;
 use Database\DatabaseRecord\EmptyDatabaseRecord;
+use Database\Debug;
 
 /**
  * DatabaseType object for MySQL using the PDO connector.
@@ -81,7 +82,7 @@ class PDOMySQL implements IDatabaseConnection
 
     /**
      * Execute a query. The parameter can either be a Query(Abstract) object, or a string containing a full query.
-     * @param  $query
+     * @param $query
      * @return DatabaseRecord
      */
     public function query($query)
@@ -90,12 +91,24 @@ class PDOMySQL implements IDatabaseConnection
             return $this->query($this->buildQuery($query));
         }
 
-        return $this->getPDODatabaseRecord($this->pdo->query($query));
+        $debug = (new Debug\ExecutedQuery($query))->setBacktrace(debug_backtrace());
+        $startTime = microtime(true);
+        try {
+            $result = $this->pdo->query($query);
+        } catch (\Throwable $throwable) {
+            $debug->setException($throwable);
+            throw $throwable;
+        } finally {
+            $debug->setExecutionTime(microtime(true) - $startTime);
+            Debug::addQuery($debug);
+        }
+
+        return $this->getPDODatabaseRecord($result);
     }
 
     /**
      * Execute a query. The parameter can either be a Query(Abstract) object, or a string containing a full query.
-     * @param  $query
+     * @param $query
      * @return DatabaseRecord
      */
     public function execute($query)
@@ -104,7 +117,19 @@ class PDOMySQL implements IDatabaseConnection
             return $this->execute($this->buildQuery($query));
         }
 
-        return $this->getPDODatabaseRecord($this->pdo->exec($query));
+        $debug = (new Debug\ExecutedQuery($query, Debug\ExecutedQuery::QUERY_EXECUTE))->setBacktrace(debug_backtrace());
+        $startTime = microtime(true);
+        try {
+            $result = $this->pdo->exec($query);
+        } catch (\Throwable $throwable) {
+            $debug->setException($throwable);
+            throw $throwable;
+        } finally {
+            $debug->setExecutionTime(microtime(true) - $startTime);
+            Debug::addQuery($debug);
+        }
+
+        return $this->getPDODatabaseRecord($result);
     }
 
     /**
