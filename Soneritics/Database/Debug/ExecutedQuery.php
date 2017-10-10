@@ -30,8 +30,8 @@ namespace Database\Debug;
  */
 class ExecutedQuery
 {
-    public const QUERY_QUERY = 'Query';
-    public const QUERY_EXECUTE = 'Execute';
+    const QUERY_QUERY = 'Query';
+    const QUERY_EXECUTE = 'Execute';
 
     /**
      * @var string
