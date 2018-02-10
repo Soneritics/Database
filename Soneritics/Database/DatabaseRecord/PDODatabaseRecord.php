@@ -51,7 +51,7 @@ class PDODatabaseRecord extends DatabaseRecord
     private function createMapping()
     {
         $columns = $this->pdoStatement->columnCount();
-        if (count($columns) > 0) {
+        if ($columns > 0) {
             $this->mapping = [];
             for ($i = 0; $i < $columns; $i++) {
                 $meta = $this->pdoStatement->getColumnMeta($i);
