@@ -40,7 +40,7 @@ class Debug
     /**
      * @param ExecutedQuery $query
      */
-    public static function addQuery(ExecutedQuery $query): void
+    public static function addQuery(ExecutedQuery $query)
     {
         static::invokeSubscribers($query);
     }
