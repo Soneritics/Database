@@ -52,7 +52,7 @@ class Count extends Select
 
         $this->fields = sprintf(
             'COUNT(%s)',
-            DatabaseConnectionFactory::get()->quote($fields)
+            DatabaseConnectionFactory::get()->quoteIdentifier($fields)
         );
 
         return $this;
