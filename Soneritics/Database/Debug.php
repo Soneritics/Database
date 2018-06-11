@@ -38,10 +38,16 @@ class Debug
     private static $subscribers = [];
 
     /**
+     * @var array
+     */
+    private static $queries = [];
+
+    /**
      * @param ExecutedQuery $query
      */
     public static function addQuery(ExecutedQuery $query)
     {
+        static::$queries[] = (clone $query)->setBacktrace([]);
         static::invokeSubscribers($query);
     }
 
