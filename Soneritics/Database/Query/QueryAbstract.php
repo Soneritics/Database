@@ -49,6 +49,7 @@ abstract class QueryAbstract
     protected $group = [];
     protected $order = [];
     protected $limit = [];
+    protected $index = "";
     protected $queryType = self::MODE_QUERY;
 
     /**
@@ -113,6 +114,17 @@ abstract class QueryAbstract
      * @return string Query type; SELECT, UPDATE, INSERT, DELETE, TRUNCATE, etc.
      */
     abstract public function getQueryType();
+
+    /**
+     * Force an index.
+     * @param $index
+     * @return $this
+     */
+    public function index($index)
+    {
+        $this->index = $index;
+        return $this;
+    }
 
     /**
      * Set the fields to use in the query.
@@ -283,6 +295,10 @@ abstract class QueryAbstract
 
         if (!empty($this->set)) {
             $result['set'] = $this->set;
+        }
+
+        if (!empty($this->index)) {
+            $result['index'] = $this->index;
         }
 
         if (!empty($this->joins)) {

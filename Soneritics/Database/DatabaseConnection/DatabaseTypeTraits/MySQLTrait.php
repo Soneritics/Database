@@ -161,8 +161,8 @@ trait MySQLTrait
             $from =
                 (isset($queryParts['fields']) && !empty($queryParts['fields'])) ||
                 strtoupper($queryParts['type']) === 'DELETE' ?
-                'FROM ' :
-                '';
+                    'FROM ' :
+                    '';
 
             if (is_a($queryParts['table'], 'Database\Table')) {
                 $select = !empty($from) ? $from . '%s' : '%s';
@@ -305,6 +305,20 @@ trait MySQLTrait
     }
 
     /**
+     * Get a forced index.
+     * @param array $queryParts
+     * @return string|null
+     */
+    protected function getIndex(array $queryParts)
+    {
+        if (!empty($queryParts['index'])) {
+            return 'USE INDEX (' . $this->quoteIdentifier($queryParts['index']) . ')';
+        }
+
+        return null;
+    }
+
+    /**
      * Prepare the order for use in the MySQL query.
      * @param  array $queryParts
      * @return null|string
@@ -360,6 +374,7 @@ trait MySQLTrait
                     $queryParts['type'],
                     $this->getFields($queryParts),
                     $this->getTable($queryParts),
+                    $this->getIndex($queryParts),
                     $this->getSet($queryParts),
                     $this->getValues($queryParts),
                     $this->getJoins($queryParts),
