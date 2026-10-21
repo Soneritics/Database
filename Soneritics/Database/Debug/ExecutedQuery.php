@@ -66,7 +66,7 @@ class ExecutedQuery
      * @param array $backtrace
      * @param \Exception $exception
      */
-    public function __construct($query, $type = self::QUERY_QUERY, $executionTime = null, array $backtrace = [], \Exception $exception = null)
+    public function __construct($query, $type = self::QUERY_QUERY, $executionTime = null, array $backtrace = [], ?\Exception $exception = null)
     {
         $this->setQuery($query);
         $this->setType($type);
